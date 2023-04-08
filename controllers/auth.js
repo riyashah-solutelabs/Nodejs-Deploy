@@ -1,3 +1,5 @@
+const dotenv = require('dotenv');
+dotenv.config()
 const crypto = require('crypto')
 const moment = require('moment-timezone');
 const { validationResult } = require('express-validator')
@@ -8,13 +10,15 @@ const sendgridTransport = require('nodemailer-sendgrid-transport')
 
 const User = require('../models/user');
 
-const transporter = nodemailer.createTransport(sendgridTransport({
+const transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false, // upgrade later with STARTTLS
   auth: {
-    // api_user :
-    // api_key :
-    api_key : 'process.env.EMAIL_KEY'
-  }
-}))
+      user: process.env.EMAIL_ID, 
+      pass: process.env.EMAIL_PASSWORD
+  },
+});
 
 exports.getLogin = (req, res, next) => {
   let message = req.flash('error')
@@ -130,12 +134,12 @@ exports.postSignup = (req, res, next) => {
       .then((result) => {
         res.redirect('/login')
         return transporter.sendMail({
+          from: process.env.USER,
           to: email,
-          // from : 'shop@node-complete.com',
-          from : 'riyaashah402@gmail.com',
-          subject: 'Signup successful',
-          html : "<h1>You Successfully signed up!</h1>"
-        })
+          subject: 'welcome to shop',
+          html: 'Successful signup'}, err =>{
+          console.log(err);
+      })
       })
       .catch(err => {
         const error = new Error(err)
@@ -188,13 +192,15 @@ exports.postReset = (req,res,next) => {
             transporter.sendMail({
               to: req.body.email,
               // from : 'shop@node-complete.com',
-              from : 'riyaashah402@gmail.com',
+              from : process.env.USER,
               subject: 'Password Reset',
               html : `
                 <p>You requested a Password Reset</p>
                 <p>Click this <a href="http://localhost:4000/reset/${token}"> link </a> to set a new password/</p>
               `
-            })
+              }, err =>{
+              console.log(err);
+          })
     })
     })
     .catch(err => {
