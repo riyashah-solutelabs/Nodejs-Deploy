@@ -10,6 +10,8 @@ const sendgridTransport = require('nodemailer-sendgrid-transport')
 
 const User = require('../models/user');
 
+console.log(process.env.EMAIL_ID)
+
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 587,
