@@ -134,7 +134,7 @@ exports.postSignup = (req, res, next) => {
       .then((result) => {
         res.redirect('/login')
         return transporter.sendMail({
-          from: process.env.USER,
+          from: process.env.EMAIL_ID,
           to: email,
           subject: 'welcome to shop',
           html: 'Successful signup'}, err =>{
@@ -192,7 +192,7 @@ exports.postReset = (req,res,next) => {
             transporter.sendMail({
               to: req.body.email,
               // from : 'shop@node-complete.com',
-              from : process.env.USER,
+              from : process.env.EMAIL_ID,
               subject: 'Password Reset',
               html : `
                 <p>You requested a Password Reset</p>
