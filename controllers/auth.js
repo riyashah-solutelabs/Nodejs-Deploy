@@ -9,6 +9,8 @@ const nodemailer = require('nodemailer')
 const sendgridTransport = require('nodemailer-sendgrid-transport')
 
 const User = require('../models/user');
+console.log(process.env.EMAIL_ID)
+console.log(process.env.EMAIL_PASSWORD)
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
@@ -134,7 +136,7 @@ exports.postSignup = (req, res, next) => {
       .then((result) => {
         res.redirect('/login')
         return transporter.sendMail({
-          from: process.env.USER,
+          from: process.env.EMAIL_ID,
           to: email,
           subject: 'welcome to shop',
           html: 'Successful signup'}, err =>{
@@ -190,9 +192,9 @@ exports.postReset = (req,res,next) => {
         .then(result => {
             res.redirect('/')
             transporter.sendMail({
+              from : process.env.EMAIL_ID,
               to: req.body.email,
               // from : 'shop@node-complete.com',
-              from : process.env.USER,
               subject: 'Password Reset',
               html : `
                 <p>You requested a Password Reset</p>
