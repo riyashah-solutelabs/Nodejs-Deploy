@@ -10,7 +10,7 @@ const multer = require('multer');
 
 const errorController = require('./controllers/error');
 const User = require('./models/user');
-
+console.log(process.env.MONGO_DEFAULT_DATABASE)
 const MONGODB_URI =
   `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.sdwkice.mongodb.net/${process.env.MONGO_DEFAULT_DATABASE}`;
 

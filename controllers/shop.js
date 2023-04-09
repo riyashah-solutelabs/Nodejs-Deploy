@@ -295,12 +295,12 @@ exports.getInvoice = (req,res,next) => {
           '-' + 
           prod.quantity + 
           'x' + 
-          '$' + 
+          '₹' + 
           prod.product.price
         )
     })
     pdfDoc.text('----')
-    pdfDoc.fontSize(20).text('Totla Price : $' + totalPrice)
+    pdfDoc.fontSize(20).text('Totla Price : ₹' + totalPrice)
 
     pdfDoc.end();
   })
