@@ -14,14 +14,14 @@ router.get('/signup', authController.getSignup);
 router.post('/login', 
 body('email').isEmail()
 .withMessage('Please Enter Valid Email')
-// .custom((value,{req}) => {
-//     return User.findOne({email : value})
-//     .then(user => {
-//       if(!user){
-//         return Promise.reject('Invalid email or password')
-//       }
-//     })
-// })
+.custom((value,{req}) => {
+    return User.findOne({email : value})
+    .then(user => {
+      if(!user){
+        return Promise.reject('Invalid email or password')
+      }
+    })
+})
 .normalizeEmail()
 ,
 body('password', "Password has to be valid.")
